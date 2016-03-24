@@ -8,8 +8,14 @@
  * Version: 1.0
  */
  
-
+ //enqueues the style sheet if needed
+function lakefront_plguin(){ 
+	wp_enqueue_style( 'lakefront_plugin_style', plugins_url('/lakefront_plugin_style.css', __FILE__) );
+}
+add_action('wp_enqueue_scripts','lakefront_plugin');
  
+ 
+
  
 
 
