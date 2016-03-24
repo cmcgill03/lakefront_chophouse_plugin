@@ -37,6 +37,6 @@ add_shortcode("testimonials", "testimonials");
 
 /*Call the widget */
 
-//require get_template_directory() . '/plugins/lakefront_plugin/inc/lakefront_widget.php'; 
+require get_stylesheet_directory() . '/lakefront_widget.php'; 
 
 ?>
