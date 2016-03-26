@@ -109,7 +109,7 @@ add_action('wp_enqueue_scripts','lakefront_plugin');
 function testimonials($atts, $content = null) { //declare the function for the shortcode
         extract(shortcode_atts(array(
                 "num" => '1', //how many posts will be shown
-                "posttype" => 'testimonials' //which category the posts will be shown from
+                "posttype" => 'testimonials' //which post type the posts will be shown from
         ), $atts));
 		
         global $post; //declares a global variable for post
