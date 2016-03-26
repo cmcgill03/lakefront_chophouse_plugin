@@ -8,6 +8,25 @@
  * Version: 1.0
  */
  
+ //Creating custom post type
+function lakefront_custom_posttype () {
+	$args = array(
+		'public' => true,
+		'label' => 'Menu Items',
+		'supports' => array( 'title', 'editor', 'thumbnail' )
+	);
+	$args2 = array(
+		'public' => true,
+		'label' => 'Testimonials',
+		'supports' => array( 'title', 'editor', 'thumbnail' )
+	);
+	register_post_type( 'menu_items', $args);
+	register_post_type( 'testimonials', $args2);
+}
+ 
+ //function will run when the plugin is initiated 
+add_action ('init', 'lakefront_custom_posttype' );
+
  
  //enqueues the style sheet if needed
 function lakefront_plguin(){ 
