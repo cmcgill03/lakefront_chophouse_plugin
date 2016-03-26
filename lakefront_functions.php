@@ -11,17 +11,17 @@
  //Creating custom post type
 function lakefront_custom_posttype () {
 	$args = array(
-		'public' => true,
-		'label' => 'Menu Items',
-		'supports' => array( 'title', 'editor', 'thumbnail' )
+		'public' => true, //makes it available to the public
+		'label' => 'Menu Items', //title on the dashboard
+		'supports' => array( 'title', 'editor', 'thumbnail' ) //adds support for title, editor and thumbnail image
 	);
 	$args2 = array(
-		'public' => true,
-		'label' => 'Testimonials',
-		'supports' => array( 'title', 'editor', 'thumbnail' )
+		'public' => true, //makes it available to the public
+		'label' => 'Testimonials', //title on the dashboard
+		'supports' => array( 'title', 'editor', 'thumbnail' ) //adds support for title, editor and thumbnail image
 	);
-	register_post_type( 'menu_items', $args);
-	register_post_type( 'testimonials', $args2);
+	register_post_type( 'menu_items', $args); //Register menu items custom post type
+	register_post_type( 'testimonials', $args2); //Register testimonials custom post type
 }
  
  //function will run when the plugin is initiated 
