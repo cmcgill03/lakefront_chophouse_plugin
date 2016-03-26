@@ -14,6 +14,8 @@
   Based on register_post_type rules from codex
 ************************************************/
 function lakefront_custom_posttype () {
+	
+	//Menu Item Custom Post Type
 	 $labels = array( //Changing all the labels to relate to custom post type
         'name'               => 'Menu Items',
         'singular_name'      => 'Menu Item',
@@ -43,6 +45,7 @@ function lakefront_custom_posttype () {
         'supports'           => array( 'title', 'editor', 'thumbnail' ) //supports title, editor box and thumbnail
     );
 	
+	//Testimonial Custom Post Type
 	$labels2 = array( //Changing all the labels to relate to custom post type
         'name'               => 'Testimonials',
         'singular_name'      => 'Testimonial',
