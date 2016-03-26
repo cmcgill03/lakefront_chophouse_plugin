@@ -43,6 +43,7 @@ function lakefront_custom_posttype () {
         'has_archive'        => true, //allows it to be archived
         'menu_position'      => 5, //changes position of custom post type
         'supports'           => array( 'title', 'editor', 'thumbnail' ) //supports title, editor box and thumbnail
+		'taxonomies'         => array( 'category', 'post_tag' ) //Allows categories and tags
     );
 	
 	//Testimonial Custom Post Type
