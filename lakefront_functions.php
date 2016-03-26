@@ -42,7 +42,7 @@ function lakefront_custom_posttype () {
         'capability_type'    => 'post', //declares the type
         'has_archive'        => true, //allows it to be archived
         'menu_position'      => 5, //changes position of custom post type
-        'supports'           => array( 'title', 'editor', 'thumbnail' ) //supports title, editor box and thumbnail
+        'supports'           => array( 'title', 'editor', 'thumbnail' ), //supports title, editor box and thumbnail
 		'taxonomies'         => array( 'category', 'post_tag' ) //Allows categories and tags
     );
 	
@@ -73,7 +73,7 @@ function lakefront_custom_posttype () {
         'capability_type'    => 'post', //declares the type
         'has_archive'        => true, //allows it to be archived
         'menu_position'      => 5, //changes position of custom post type
-        'supports'           => array( 'title', 'editor', 'thumbnail' ) //supports title, editor box and thumbnail
+        'supports'           => array( 'title', 'editor' ) //supports title, and editor box
     );
 	
 	register_post_type( 'menu_items', $args); //Register menu items custom post type
