@@ -10,16 +10,63 @@
  
  //Creating custom post type
 function lakefront_custom_posttype () {
-	$args = array(
-		'public' => true, //makes it available to the public
-		'label' => 'Menu Items', //title on the dashboard
-		'supports' => array( 'title', 'editor', 'thumbnail' ) //adds support for title, editor and thumbnail image
-	);
-	$args2 = array(
-		'public' => true, //makes it available to the public
-		'label' => 'Testimonials', //title on the dashboard
-		'supports' => array( 'title', 'editor', 'thumbnail' ) //adds support for title, editor and thumbnail image
-	);
+	 $labels = array( //Changing all the labels to relate to custom post type
+        'name'               => 'Menu Items',
+        'singular_name'      => 'Menu Item',
+        'menu_name'          => 'Menu Items',
+        'name_admin_bar'     => 'Menu Item',
+        'add_new'            => 'Add New',
+        'add_new_item'       => 'Add New Menu Item',
+        'new_item'           => 'New Menu Item',
+        'edit_item'          => 'Edit Menu Item',
+        'view_item'          => 'View Menu Item',
+        'all_items'          => 'All Menu Items',
+        'search_items'       => 'Search Menu Items',
+        'parent_item_colon'  => 'Parent Menu Items:',
+        'not_found'          => 'No Menu Items found.',
+        'not_found_in_trash' => 'No Menu Items found in Trash.',
+    );
+    
+    $args = array(
+        'labels'             => $labels, //uses the labels we just declared
+        'public'             => true, //makes it public use
+        'show_in_menu'       => true, // allows it be shown in the menu
+        'menu_icon'          => 'dashicons-carrot', //changes the admin icon
+        'rewrite'            => array( 'slug' => 'menu-item' ), //changes the slug name
+        'capability_type'    => 'post', //declares the type
+        'has_archive'        => true, //allows it to be archived
+        'menu_position'      => 5, //changes position of custom post type
+        'supports'           => array( 'title', 'editor', 'thumbnail' ) //supports title, editor box and thumbnail
+    );
+	
+	$labels2 = array( //Changing all the labels to relate to custom post type
+        'name'               => 'Testimonials',
+        'singular_name'      => 'Testimonial',
+        'menu_name'          => 'Testimonials',
+        'name_admin_bar'     => 'Testimonial',
+        'add_new'            => 'Add New',
+        'add_new_item'       => 'Add New Testimonial',
+        'new_item'           => 'New Testimonial',
+        'edit_item'          => 'Edit Testimonial',
+        'view_item'          => 'View Testimonial',
+        'all_items'          => 'All Testimonials',
+        'search_items'       => 'Search Testimonials',
+        'parent_item_colon'  => 'Parent Testimonials:',
+        'not_found'          => 'No testimonials found.',
+        'not_found_in_trash' => 'No testimonials found in Trash.',
+    );
+    
+    $args2 = array(
+        'labels'             => $labels2, //uses the labels we just declared
+        'public'             => true, //makes it public use
+        'show_in_menu'       => true, // allows it be shown in the menu,
+        'menu_icon'          => 'dashicons-testimonial', //changes the admin icon
+        'rewrite'            => array( 'slug' => 'testimonials' ), //changes the slug name
+        'capability_type'    => 'post', //declares the type
+        'has_archive'        => true, //allows it to be archived
+        'menu_position'      => 5, //changes position of custom post type
+        'supports'           => array( 'title', 'editor', 'thumbnail' ) //supports title, editor box and thumbnail
+    );
 	register_post_type( 'menu_items', $args); //Register menu items custom post type
 	register_post_type( 'testimonials', $args2); //Register testimonials custom post type
 }
