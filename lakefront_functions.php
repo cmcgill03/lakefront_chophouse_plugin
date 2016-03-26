@@ -8,7 +8,9 @@
  * Version: 1.0
  */
  
- //Creating custom post type
+/***********************************************
+  Custom Post Type(s)
+************************************************/
 function lakefront_custom_posttype () {
 	 $labels = array( //Changing all the labels to relate to custom post type
         'name'               => 'Menu Items',
@@ -67,6 +69,7 @@ function lakefront_custom_posttype () {
         'menu_position'      => 5, //changes position of custom post type
         'supports'           => array( 'title', 'editor', 'thumbnail' ) //supports title, editor box and thumbnail
     );
+	
 	register_post_type( 'menu_items', $args); //Register menu items custom post type
 	register_post_type( 'testimonials', $args2); //Register testimonials custom post type
 }
@@ -75,17 +78,19 @@ function lakefront_custom_posttype () {
 add_action ('init', 'lakefront_custom_posttype' );
 
  
- //enqueues the style sheet if needed
-function lakefront_plguin(){ 
+ 
+/***********************************************
+  StyleSheet
+************************************************/
+function lakefront_plguin(){ //enqueues the stylesheet
 	wp_enqueue_style( 'lakefront_plugin_style', plugins_url('/lakefront_plugin_style.css', __FILE__) );
 }
 add_action('wp_enqueue_scripts','lakefront_plugin');
 
 
-
-
-
-
+/***********************************************
+  Shortcodes
+************************************************/
 function testimonials($atts, $content = null) { //declare the function for the shortcode
         extract(shortcode_atts(array(
                 "num" => '1', //how many posts will be shown
