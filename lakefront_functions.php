@@ -10,6 +10,8 @@
  
 /***********************************************
   Custom Post Type(s)
+  
+  Based on register_post_type rules from codex
 ************************************************/
 function lakefront_custom_posttype () {
 	 $labels = array( //Changing all the labels to relate to custom post type
@@ -77,7 +79,16 @@ function lakefront_custom_posttype () {
  //function will run when the plugin is initiated 
 add_action ('init', 'lakefront_custom_posttype' );
 
- 
+/***********************************************
+  Permalink Slug
+  
+  From Codex - used when changing the slug name as we did above for custom post type
+************************************************/
+function my_rewrite_flush() {
+    lakefront_custom_posttype();
+    flush_rewrite_rules();
+}
+register_activation_hook( __FILE__, 'my_rewrite_flush' );
  
 /***********************************************
   StyleSheet
