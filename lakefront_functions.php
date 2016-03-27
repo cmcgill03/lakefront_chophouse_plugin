@@ -122,7 +122,6 @@ function testimonials($atts, $content = null) { //declare the function for the s
         return $testimonial; //displays the title and the content
 }
 add_shortcode('testimonials', 'testimonials'); 
- 
 
  
 /***********************************************
