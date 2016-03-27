@@ -124,9 +124,85 @@ function testimonials($atts, $content = null) { //declare the function for the s
 add_shortcode('testimonials', 'testimonials'); 
  
 
+ 
+/***********************************************
+ Widget
+************************************************/
+ class lakefront_testimonial extends WP_Widget {
+	public function __construct() {
+		$lakefront_widget = array(
+		'classname' => 'widget_testimonial',
+		'description' => __( 'Place a certain number of testimonials.') );
+		parent::__construct('testimonial', __('Testimonials', 'lakefront_chophouse'), $lakefront_widget);
+	} 
+	
 
-/*Call the widget */
+	public function widget( $args, $instance ) {
+		//$count
+		$title = apply_filters('widget_title', empty($instance['title']) ? __('Special of the Day', 'lakefront') : $instance['title'], $instance, $this->id_base); 
+		// Determines if there's a user-provided title and if not, displays a default title.
+		
+		echo $args['before_widget']; // what's set up when you registered the sidebar
+		
+		if ( $title ) {
+			echo $args['before_title'] . $title . $args['after_title'];
+		}
 
-//require plugins_url( 'C:/MAMP/htdocs/Wordpress1/wp-content/plugins/lakefront_chophouse_plugin/lakefront_widget.php', dirname(__FILE__) ); 
+
+		$args = array( 
+			'post_type' => 'testimonials', 
+			'posts_per_page' => 3,
+			'orderby' => 'rand'
+		);
+
+		$testimonials = new WP_Query( $args );
+		while ( $testimonials->have_posts() ) : $testimonials->the_post();
+			echo '<div class="testimonial">';
+			echo '<figure class="testimonial-thumb">';
+			the_post_thumbnail('medium');
+			echo '</figure>';
+			echo '<h1 class="entry-title">' . get_the_title() . '</h1>';
+			echo '<div class="entry-content">';
+			the_content();
+			echo '</div>';
+			echo '</div>';
+		endwhile;
+
+		
+		echo $args['after_widget']; // what's set up when you registered the sidebar
+	}
+	
+	public function form( $instance ) {
+		$instance = wp_parse_args( (array) $instance, array( 'title' => '', 'count' => 0, 'dropdown' => '') );
+		$title = strip_tags($instance['title']);
+		$count = $instance['count'] ? 'checked="checked"' : '';
+		$dropdown = $instance['dropdown'] ? 'checked="checked"' : '';
+?>
+		<p>
+		<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label> 
+		<input
+		class="widefat"
+		id="<?php echo $this->get_field_id('title'); ?>"
+		name="<?php echo $this->get_field_name('title'); ?>"
+		type="text" value="<?php echo esc_attr($title); ?>" 
+		/>
+		</p>
+		
+		<p>
+		<label for="<?php echo $this->get_field_id('count'); ?>"><?php _e('How many posts would you like to show:'); ?></label> 
+		<input
+		class="widefat"
+		id="<?php echo $this->get_field_id('title'); ?>"
+		name="<?php echo $this->get_field_name('title'); ?>"
+		type="text" value="<?php echo esc_attr($title); ?>" 
+		/>
+		</p>
+<?php }
+
+}
+
+add_action( 'widgets_init', function(){ register_widget('lakefront_testimonial' ); }); 
+
+
 
 ?>
