@@ -125,7 +125,7 @@ add_shortcode('testimonials', 'testimonials');
 
  
 /***********************************************
- Widget
+ Widget, displays special of the day
 ************************************************/
  class lakefront_testimonial extends WP_Widget {
 	public function __construct() {
@@ -196,6 +196,8 @@ add_shortcode('testimonials', 'testimonials');
 
 add_action( 'widgets_init', function(){ register_widget('lakefront_testimonial' ); }); 
 
-
+/*
+ * Action function which pulls in testimonials from registered widgets 
+ */
 
 ?>
