@@ -174,7 +174,7 @@ add_shortcode('testimonials', 'testimonials');
 	}
 	
 	
-	//Back end
+	//Back end, brings together an array of title and count 
 	public function form( $instance ) {
 		$instance = wp_parse_args( (array) $instance, array( 'title' => '', 'count' => 1) );
 		$title = strip_tags($instance['title']);
@@ -189,6 +189,8 @@ add_shortcode('testimonials', 'testimonials');
 		type="text" value="<?php echo esc_attr($title); ?>" 
 		/>
 		</p>
+		
+//Gets attribute id in widgets relating to title 
 		
 <?php }
 
