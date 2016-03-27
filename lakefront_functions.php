@@ -131,14 +131,14 @@ add_shortcode('testimonials', 'testimonials');
  class lakefront_testimonial extends WP_Widget {
 	public function __construct() {
 		$lakefront_widget = array(
-		'classname' => 'widget_testimonial',
-		'description' => __( 'Place a certain number of testimonials.') );
-		parent::__construct('testimonial', __('Testimonials', 'lakefront_chophouse'), $lakefront_widget);
+		'classname' => 'widget_sod',
+		'description' => __( 'Display the Special(s) of the Day.') );
+		parent::__construct('special', __('Specials', 'lakefront_chophouse'), $lakefront_widget);
 	} 
 	
-
+	//Front End
 	public function widget( $args, $instance ) {
-		//$count
+		//$count = $instance['count'];
 		$title = apply_filters('widget_title', empty($instance['title']) ? __('Special of the Day', 'lakefront') : $instance['title'], $instance, $this->id_base); 
 		// Determines if there's a user-provided title and if not, displays a default title.
 		
@@ -148,7 +148,9 @@ add_shortcode('testimonials', 'testimonials');
 			echo $args['before_title'] . $title . $args['after_title'];
 		}
 
-
+		/*****************
+		loop to search through post type and get certain amount of posts
+		******************
 		$args = array( 
 			'post_type' => 'testimonials', 
 			'posts_per_page' => 3,
@@ -167,16 +169,17 @@ add_shortcode('testimonials', 'testimonials');
 			echo '</div>';
 			echo '</div>';
 		endwhile;
-
+		*/
 		
 		echo $args['after_widget']; // what's set up when you registered the sidebar
 	}
 	
+	
+	//Back end
 	public function form( $instance ) {
-		$instance = wp_parse_args( (array) $instance, array( 'title' => '', 'count' => 0, 'dropdown' => '') );
+		$instance = wp_parse_args( (array) $instance, array( 'title' => '', 'count' => 1) );
 		$title = strip_tags($instance['title']);
-		$count = $instance['count'] ? 'checked="checked"' : '';
-		$dropdown = $instance['dropdown'] ? 'checked="checked"' : '';
+		$count = $instance['count'];
 ?>
 		<p>
 		<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label> 
@@ -188,15 +191,6 @@ add_shortcode('testimonials', 'testimonials');
 		/>
 		</p>
 		
-		<p>
-		<label for="<?php echo $this->get_field_id('count'); ?>"><?php _e('How many posts would you like to show:'); ?></label> 
-		<input
-		class="widefat"
-		id="<?php echo $this->get_field_id('title'); ?>"
-		name="<?php echo $this->get_field_name('title'); ?>"
-		type="text" value="<?php echo esc_attr($title); ?>" 
-		/>
-		</p>
 <?php }
 
 }
