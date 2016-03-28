@@ -97,7 +97,7 @@ register_activation_hook( __FILE__, 'my_rewrite_flush' );
 /***********************************************
   StyleSheet
 ************************************************/
-function lakefront_plguin(){ //enqueues the stylesheet
+function lakefront_plugin(){ //enqueues the stylesheet
 	wp_enqueue_style( 'lakefront_plugin_style', plugins_url('/lakefront_plugin_style.css', __FILE__) );
 }
 add_action('wp_enqueue_scripts','lakefront_plugin');
