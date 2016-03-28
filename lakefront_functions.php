@@ -216,24 +216,24 @@ class lakefront_testimonial extends WP_Widget{
 		parent::__construct(
 			'testimonials_widget', // Base ID
 			'testimonials widget', // Name
-			array('description' => __( 'Displays your testimonials. Outputs the post thumbnail, title and date'))
+			array('description' => __( 'Displays your menu items. Outputs the post thumbnail, title and date'))
 		   );
 	}
 
 	function update($new_instance, $old_instance) {
 			$instance = $old_instance;
 			$instance['title'] = strip_tags($new_instance['title']);
-			$instance['numberOftestimonials'] = strip_tags($new_instance['numberOftestimonials']);
+			$instance['numberOfmenuitems'] = strip_tags($new_instance['numberOfmenuitems']);
 			return $instance;
 	}
 
 	function form($instance) {
 		if( $instance) {
 			$title = esc_attr($instance['title']);
-			$numberOfListings = esc_attr($instance['numberOftestimonials']);
+			$numberOfmenuitems = esc_attr($instance['numberOfmenuitems']);
 		} else {
 			$title = '';
-			$numberOftestimonials = '';
+			$numberOfmenuitems = '';
 		}
 		?>
 			<p>
@@ -241,10 +241,10 @@ class lakefront_testimonial extends WP_Widget{
 			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
 			</p>
 			<p>
-			<label for="<?php echo $this->get_field_id('numberOftestimonials'); ?>"><?php _e('Number of testimonials:', 'realty_testimonials'); ?></label>
-			<select id="<?php echo $this->get_field_id('numberOftestimonials'); ?>"  name="<?php echo $this->get_field_name('numberOftestimonials'); ?>">
+			<label for="<?php echo $this->get_field_id('numberOfmenuitems'); ?>"><?php _e('Number of Menu Items:'); ?></label>
+			<select id="<?php echo $this->get_field_id('numberOfmenuitems'); ?>"  name="<?php echo $this->get_field_name('numberOfmenuitems'); ?>">
 				<?php for($x=1;$x<=5;$x++): ?>
-				<option <?php echo $x == $numberOftestimonials ? 'selected="selected"' : '';?> value="<?php echo $x;?>"><?php echo $x; ?></option>
+				<option <?php echo $x == $numberOfmenuitems ? 'selected="selected"' : '';?> value="<?php echo $x;?>"><?php echo $x; ?></option>
 				<?php endfor;?>
 			</select>
 			</p>
@@ -254,20 +254,22 @@ class lakefront_testimonial extends WP_Widget{
 	function widget($args, $instance) {
 		extract( $args );
 		$title = apply_filters('widget_title', $instance['title']);
-		$numberOftestimonials = $instance['numberOftestimonials'];
+
+		$numberOfmenuitems = $instance['numberOfmenuitems'];
+		
 		echo $before_widget;
 		if ( $title ) {
 			echo $before_title . $title . $after_title;
 		}
-		$this->gettestimonials($numberOftestimonials);
+		$this->gettestimonials($numberOfmenuitems);
 		echo $after_widget;
 	}
 
-	function gettestimonials($numberOftestimonials) { //html
+	function gettestimonials($numberOfmenuitems) { //html
 		global $post;
 		add_image_size( 'testimonials_widget_size', 85, 45, false );
 		$testimonials = new WP_Query();
-		$testimonials->query('post_type=menu_items&posts_per_page=' . $numberOftestimonials );
+		$testimonials->query('post_type=menu_items&posts_per_page=' . $numberOfmenuitems );
 		if($testimonials->found_posts > 0) {
 				while ($testimonials->have_posts()) {
 					$testimonials->the_post();
