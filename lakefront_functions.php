@@ -211,78 +211,78 @@ add_action( 'widgets_init', function(){ register_widget('lakefront_testimonial' 
  * widget building
  */
 
-class testimonials_widget extends WP_Widget{
-function __construct() {
-	parent::__construct(
-		'testimonials_widget', // Base ID
-		'testimonials widget', // Name
-		array('description' => __( 'Displays your testimonials. Outputs the post thumbnail, title and date'))
-	   );
-}
-function update($new_instance, $old_instance) {
-		$instance = $old_instance;
-		$instance['title'] = strip_tags($new_instance['title']);
-		$instance['numberOftestimonials'] = strip_tags($new_instance['numberOftestimonials']);
-		return $instance;
-}
-} //end class testimonials_widget
-register_widget('testimonials_widget');
-
-function form($instance) {
-	if( $instance) {
-		$title = esc_attr($instance['title']);
-		$numberOfListings = esc_attr($instance['numberOftestimonials']);
-	} else {
-		$title = '';
-		$numberOftestimonials = '';
+class lakefront_testimonial extends WP_Widget{
+	function __construct() {
+		parent::__construct(
+			'testimonials_widget', // Base ID
+			'testimonials widget', // Name
+			array('description' => __( 'Displays your testimonials. Outputs the post thumbnail, title and date'))
+		   );
 	}
-	?>
-		<p>
-		<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', 'testimonials_widget'); ?></label>
-		<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
-		</p>
-		<p>
-		<label for="<?php echo $this->get_field_id('numberOftestimonials'); ?>"><?php _e('Number of testimonials:', 'realty_testimonials'); ?></label>
-		<select id="<?php echo $this->get_field_id('numberOftestimonials'); ?>"  name="<?php echo $this->get_field_name('numberOftestimonials'); ?>">
-			<?php for($x=1;$x<=10;$x++): ?>
-			<option <?php echo $x == $numberOftestimonials ? 'selected="selected"' : '';?> value="<?php echo $x;?>"><?php echo $x; ?></option>
-			<?php endfor;?>
-		</select>
-		</p>
-	<?php
+
+	function update($new_instance, $old_instance) {
+			$instance = $old_instance;
+			$instance['title'] = strip_tags($new_instance['title']);
+			$instance['numberOftestimonials'] = strip_tags($new_instance['numberOftestimonials']);
+			return $instance;
+	}
+
+	function form($instance) {
+		if( $instance) {
+			$title = esc_attr($instance['title']);
+			$numberOfListings = esc_attr($instance['numberOftestimonials']);
+		} else {
+			$title = '';
+			$numberOftestimonials = '';
+		}
+		?>
+			<p>
+			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', 'testimonials_widget'); ?></label>
+			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
+			</p>
+			<p>
+			<label for="<?php echo $this->get_field_id('numberOftestimonials'); ?>"><?php _e('Number of testimonials:', 'realty_testimonials'); ?></label>
+			<select id="<?php echo $this->get_field_id('numberOftestimonials'); ?>"  name="<?php echo $this->get_field_name('numberOftestimonials'); ?>">
+				<?php for($x=1;$x<=5;$x++): ?>
+				<option <?php echo $x == $numberOftestimonials ? 'selected="selected"' : '';?> value="<?php echo $x;?>"><?php echo $x; ?></option>
+				<?php endfor;?>
+			</select>
+			</p>
+		<?php
 	}
 
 	function widget($args, $instance) {
-	extract( $args );
-	$title = apply_filters('widget_title', $instance['title']);
-	$numberOftestimonials = $instance['numberOftestimonials'];
-	echo $before_widget;
-	if ( $title ) {
-		echo $before_title . $title . $after_title;
+		extract( $args );
+		$title = apply_filters('widget_title', $instance['title']);
+		$numberOftestimonials = $instance['numberOftestimonials'];
+		echo $before_widget;
+		if ( $title ) {
+			echo $before_title . $title . $after_title;
+		}
+		$this->gettestimonials($numberOftestimonials);
+		echo $after_widget;
 	}
-	$this->gettestimonials($numberOftestimonials);
-	echo $after_widget;
+
+	function gettestimonials($numberOftestimonial) { //html
+		global $post;
+		add_image_size( 'testimonials_widget_size', 85, 45, false );
+		$testimonials = new WP_Query();
+		$testimonials->query('post_type=menu_items&posts_per_page=' . $numberOfListings );
+		if($testimonials->found_posts > 0) {
+				while ($testimonials->have_posts()) {
+					$testimonials->the_post();
+					$image = (has_post_thumbnail($post->ID)) ? get_the_post_thumbnail($post->ID, 'testimonials_widget_size') : '<div class="noThumb"></div>';
+					$listItem = '<li>' . $image;
+					$listItem .= '<a href="' . get_permalink() . '">';
+					$listItem .= get_the_title() . '</a>';
+					$listItem .= '<span>Added ' . get_the_date() . '</span></li>';
+					echo $listItem;
+				}
+			wp_reset_postdata();
+		}else{
+			echo '<p style="padding:25px;">No testimonials found</p>';
+		}
+	}
 }
 
-function gettestimonials($numberOftestimonial) { //html
-	global $post;
-	add_image_size( 'testimonials_widget_size', 85, 45, false );
-	$testimonials = new WP_Query();
-	$testimonials->query('post_type=testimonials&posts_per_page=' . $numberOfListings );
-	if($testimonials->found_posts > 0) {
-		echo '<ul class="realty_widget">';
-			while ($testimonials->have_posts()) {
-				$testimonials->the_post();
-				$image = (has_post_thumbnail($post->ID)) ? get_the_post_thumbnail($post->ID, 'testimonials_widget_size') : '<div class="noThumb"></div>';
-				$listItem = '<li>' . $image;
-				$listItem .= '<a href="' . get_permalink() . '">';
-				$listItem .= get_the_title() . '</a>';
-				$listItem .= '<span>Added ' . get_the_date() . '</span></li>';
-				echo $listItem;
-			}
-		echo '</ul>';
-		wp_reset_postdata();
-	}else{
-		echo '<p style="padding:25px;">No testimonials found</p>';
-	}
-}
+add_action( 'widgets_init', function(){ register_widget('lakefront_testimonial' ); }); 
