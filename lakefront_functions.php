@@ -131,7 +131,7 @@ add_shortcode('testimonials', 'testimonials');
 /***********************************************
  Widget, displays special of the day
 ************************************************/
- class lakefront_testimonial extends WP_Widget {
+ /*class lakefront_testimonial extends WP_Widget {
 	public function __construct() {
 		$lakefront_widget = array(
 		'classname' => 'widget_sod',
@@ -151,7 +151,7 @@ add_shortcode('testimonials', 'testimonials');
 			echo $args['before_title'] . $title . $args['after_title'];
 		}
 
-		/*****************
+		****************
 		loop to search through post type and get certain amount of posts
 		******************
 		$args = array( 
@@ -172,7 +172,7 @@ add_shortcode('testimonials', 'testimonials');
 			echo '</div>';
 			echo '</div>';
 		endwhile;
-		*/
+		
 		
 		echo $args['after_widget']; // what's set up when you registered the sidebar
 	}
@@ -194,7 +194,7 @@ add_shortcode('testimonials', 'testimonials');
 		/>
 		</p>
 		
-//Gets attribute id in widgets relating to title 
+
 		
 <?php }
 
