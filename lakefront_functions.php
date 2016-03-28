@@ -212,72 +212,73 @@ add_action( 'widgets_init', function(){ register_widget('lakefront_testimonial' 
  */
 
 class lakefront_testimonial extends WP_Widget{
-	function __construct() {
-		parent::__construct(
-			'testimonials_widget', // Base ID
-			'testimonials widget', // Name
-			array('description' => __( 'Displays your menu items. Outputs the post thumbnail, title and date'))
+
+	function __construct() {parent::__construct( 'testimonials_widget', 'testimonials widget',
+	
+	array('description' => __( 'This makes the stuff go Son. Shows Menu Items, Date Added and Thumbnail'))
 		   );
 	}
 
-	function update($new_instance, $old_instance) {
-			$instance = $old_instance;
-			$instance['title'] = strip_tags($new_instance['title']);
-			$instance['numberOfmenuitems'] = strip_tags($new_instance['numberOfmenuitems']);
-			return $instance;
+	function update($new_instance, $old_instance) { $instance = $old_instance; $instance['title'] = strip_tags($new_instance['title']); 
+
+	$instance['numberOfmenuitems'] = strip_tags($new_instance['numberOfmenuitems']); return $instance;
 	}
 
+	//out with the ond, in with the new instance
+
 	function form($instance) {
-		if( $instance) {
-			$title = esc_attr($instance['title']);
-			$numberOfmenuitems = esc_attr($instance['numberOfmenuitems']);
+		if( $instance) { $title = esc_attr($instance['title']);
+			 $numberOfmenuitems = esc_attr($instance['numberOfmenuitems']);
+
+//If title then display title, If no then it wont...pretty simple gezz
 		} else {
 			$title = '';
 			$numberOfmenuitems = '';
 		}
-		?>
-			<p>
+
+//Lets make the form shall we? K cool
+		?>	<p>
 			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', 'testimonials_widget'); ?></label>
-			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
+			<input class="Mightnotdosytles" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
 			</p>
 			<p>
 			<label for="<?php echo $this->get_field_id('numberOfmenuitems'); ?>"><?php _e('Number of Menu Items:'); ?></label>
 			<select id="<?php echo $this->get_field_id('numberOfmenuitems'); ?>"  name="<?php echo $this->get_field_name('numberOfmenuitems'); ?>">
-				<?php for($x=1;$x<=5;$x++): ?>
+				<?php for($x=1;$x<=7;$x++): ?>
 				<option <?php echo $x == $numberOfmenuitems ? 'selected="selected"' : '';?> value="<?php echo $x;?>"><?php echo $x; ?></option>
 				<?php endfor;?>
 			</select>
 			</p>
 		<?php
-	}
+	}                        //Notice the Values on Line 247, choose between 1 and 7 menu items.
+	                         //Next line echos the x variable depending on input
 
 	function widget($args, $instance) {
 		extract( $args );
 		$title = apply_filters('widget_title', $instance['title']);
 
 		$numberOfmenuitems = $instance['numberOfmenuitems'];
-		
-		echo $before_widget;
-		if ( $title ) {
-			echo $before_title . $title . $after_title;
-		}
+		                          //explaines that 
+		echo $before_widget; if ( $title ) {
+	    echo $before_title . $title . $after_title;}
+                                  //If theres a title variable then define before and after the Title
 		$this->gettestimonials($numberOfmenuitems);
 		echo $after_widget;
-	}
+	}                             //Not sure if I'm supposed to tell it to grab the gettestimonials function before its defined, but it seems to work
 
-	function gettestimonials($numberOfmenuitems) { //html
+	function gettestimonials($numberOfmenuitems) {
 		global $post;
-		add_image_size( 'testimonials_widget_size', 85, 45, false );
+		add_image_size( 'testimonials_widget_size', 90, 40, false ); //sizes the thumbnail
 		$testimonials = new WP_Query();
-		$testimonials->query('post_type=menu_items&posts_per_page=' . $numberOfmenuitems );
+		$testimonials->query('post_type=menu_items&posts_per_page=' . $numberOfmenuitems ); //searches for menu_items posts
 		if($testimonials->found_posts > 0) {
 				while ($testimonials->have_posts()) {
 					$testimonials->the_post();
 					$image = (has_post_thumbnail($post->ID)) ? get_the_post_thumbnail($post->ID, 'testimonials_widget_size') : '<div class="noThumb"></div>';
-					$listItem = '<li>' . $image;
-					$listItem .= '<a href="' . get_permalink() . '">';
-					$listItem .= get_the_title() . '</a>';
-					$listItem .= '<span>Added ' . get_the_date() . '</span></li>';
+					$listItem = '<li>' . $image;  //puts the image in a list tag, pretty sneaky huh
+					$listItem .= '<a href="' . get_permalink() . '">';  //adds post link to title
+					$listItem .= get_the_title() . '</a>'; //Display Title
+					$listItem .= '<span>Added ' . get_the_date() . '</span></li>';  //Grabs date added
 					echo $listItem;
 				}
 			wp_reset_postdata();
@@ -287,4 +288,4 @@ class lakefront_testimonial extends WP_Widget{
 	}
 }
 
-add_action( 'widgets_init', function(){ register_widget('lakefront_testimonial' ); }); 
+add_action( 'widgets_init', function(){ register_widget('lakefront_testimonial' ); }); //registers lakefront_testimonial widget
