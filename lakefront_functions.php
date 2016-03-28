@@ -263,11 +263,11 @@ class lakefront_testimonial extends WP_Widget{
 		echo $after_widget;
 	}
 
-	function gettestimonials($numberOftestimonial) { //html
+	function gettestimonials($numberOftestimonials) { //html
 		global $post;
 		add_image_size( 'testimonials_widget_size', 85, 45, false );
 		$testimonials = new WP_Query();
-		$testimonials->query('post_type=menu_items&posts_per_page=' . $numberOfListings );
+		$testimonials->query('post_type=menu_items&posts_per_page=' . $numberOftestimonials );
 		if($testimonials->found_posts > 0) {
 				while ($testimonials->have_posts()) {
 					$testimonials->the_post();
