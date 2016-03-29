@@ -191,7 +191,7 @@ class lakefront_testimonial extends WP_Widget{
 		global $post;
 		add_image_size( 'testimonials_widget_size', 90, 40, false ); //sizes the thumbnail
 		$testimonials = new WP_Query();
-		$testimonials->query('post_type=menu_items&category=special&posts_per_page=' . $numberOfmenuitems ); //searches for menu_items posts
+		$testimonials->query('post_type=menu_items&cat=7&posts_per_page=' . $numberOfmenuitems ); //searches for menu_items posts
 		if($testimonials->found_posts > 0) {
 				while ($testimonials->have_posts()) {
 					$testimonials->the_post();
@@ -204,7 +204,7 @@ class lakefront_testimonial extends WP_Widget{
 				}
 			wp_reset_postdata();
 		}else{
-			echo '<p style="padding:25px;">No testimonials found</p>';
+			echo '<p style="padding:25px;">No specials found</p>';
 		}
 	}
 }
