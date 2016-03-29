@@ -131,85 +131,6 @@ add_shortcode('testimonials', 'testimonials');
 /***********************************************
  Widget, displays special of the day
 ************************************************/
- /*class lakefront_testimonial extends WP_Widget {
-	public function __construct() {
-		$lakefront_widget = array(
-		'classname' => 'widget_sod',
-		'description' => __( 'Display the Special(s) of the Day.') );
-		parent::__construct('special', __('Specials', 'lakefront_chophouse'), $lakefront_widget);
-	} 
-	
-	//Front End
-	public function widget( $args, $instance ) {
-		//$count = $instance['count'];
-		$title = apply_filters('widget_title', empty($instance['title']) ? __('Special of the Day', 'lakefront') : $instance['title'], $instance, $this->id_base); 
-		// Determines if there's a user-provided title and if not, displays a default title.
-		
-		echo $args['before_widget']; // what's set up when you registered the sidebar
-		
-		if ( $title ) {
-			echo $args['before_title'] . $title . $args['after_title'];
-		}
-
-		****************
-		loop to search through post type and get certain amount of posts
-		******************
-		$args = array( 
-			'post_type' => 'testimonials', 
-			'posts_per_page' => 3,
-			'orderby' => 'rand'
-		);
-
-		$testimonials = new WP_Query( $args );
-		while ( $testimonials->have_posts() ) : $testimonials->the_post();
-			echo '<div class="testimonial">';
-			echo '<figure class="testimonial-thumb">';
-			the_post_thumbnail('medium');
-			echo '</figure>';
-			echo '<h1 class="entry-title">' . get_the_title() . '</h1>';
-			echo '<div class="entry-content">';
-			the_content();
-			echo '</div>';
-			echo '</div>';
-		endwhile;
-		
-		
-		echo $args['after_widget']; // what's set up when you registered the sidebar
-	}
-	
-	
-	//Back end, brings together an array of title and count 
-	public function form( $instance ) {
-		$instance = wp_parse_args( (array) $instance, array( 'title' => '', 'count' => 1) );
-		$title = strip_tags($instance['title']);
-		$count = $instance['count'];
-?>
-		<p>
-		<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label> 
-		<input
-		class="widefat"
-		id="<?php echo $this->get_field_id('title'); ?>"
-		name="<?php echo $this->get_field_name('title'); ?>"
-		type="text" value="<?php echo esc_attr($title); ?>" 
-		/>
-		</p>
-		
-
-		
-<?php }
-
-}
-
-add_action( 'widgets_init', function(){ register_widget('lakefront_testimonial' ); }); 
-/*
-
- * Action function which pulls in testimonials from registered widgets 
- */
-
-
-/*
- * widget building
- */
 
 class lakefront_testimonial extends WP_Widget{
 
@@ -270,7 +191,7 @@ class lakefront_testimonial extends WP_Widget{
 		global $post;
 		add_image_size( 'testimonials_widget_size', 90, 40, false ); //sizes the thumbnail
 		$testimonials = new WP_Query();
-		$testimonials->query('post_type=menu_items&posts_per_page=' . $numberOfmenuitems ); //searches for menu_items posts
+		$testimonials->query('post_type=menu_items&category=special&posts_per_page=' . $numberOfmenuitems ); //searches for menu_items posts
 		if($testimonials->found_posts > 0) {
 				while ($testimonials->have_posts()) {
 					$testimonials->the_post();
