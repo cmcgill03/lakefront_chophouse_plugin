@@ -213,9 +213,9 @@ add_action( 'widgets_init', function(){ register_widget('lakefront_testimonial' 
 
 class lakefront_testimonial extends WP_Widget{
 
-	function __construct() {parent::__construct( 'testimonials_widget', 'testimonials widget',
+	function __construct() {parent::__construct( 'testimonials_widget', 'Menu Items Displayer',
 	
-	array('description' => __( 'This makes the stuff go Son. Shows Menu Items, Date Added and Thumbnail'))
+	array('description' => __( 'Shows Menu Items, Clickable Title, Date Added and Thumbnail'))
 		   );
 	}
 
