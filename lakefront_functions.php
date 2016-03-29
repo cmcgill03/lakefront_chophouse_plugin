@@ -210,3 +210,6 @@ class lakefront_testimonial extends WP_Widget{
 }
 
 add_action( 'widgets_init', function(){ register_widget('lakefront_testimonial' ); }); //registers lakefront_testimonial widget
+
+//citations for widgets "Let’s Make a WordPress Widget That Displays Our Custom Post Types | Michael Soriano." Michael Soriano. Web. 29 Mar. 2016.
+//"Custom Post Type Widgets." WordPress.org. Web. 29 Mar. 2016.
